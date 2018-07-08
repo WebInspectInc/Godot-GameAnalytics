@@ -1,24 +1,34 @@
 extends Node
 # GameAnalytics <https://gameanalytics.com/> native GDScript REST API implementation
 # Cross-platform. Should work in every platform supported by Godot
-# Adapted from REST_v2_example.py by Cristiano Reis Monteiro <cristianomonteiro@gmail.com> Abr/2018
+# Adapted from Godot-GameAnalytics script by Montecri on GitHub — https://github.com/Montecri/Godot-GameAnalytics
 
 """ Procedure -->
+
 1. make an init call
 	- check if game is disabled
 	- calculate client timestamp offset from server time
 2. start a session
-3. add a user event (session start) to queue
-4. add a business event + some design events to queue
-5. submit events in queue
-6. add some design events to queue
-7. add session_end event to queue
-8. submit events in queue
+3. add any custom events that you need
+4. submit events in queue
+5. when game ends, add session_end event to queue
+6. submit events in queue
 """
+
+""" Short list of things still needed -->
+• Need to check if game is disabled in `init`
+• Need to find a way to get OS version
+• It would be nice if we could get the godot engine version, rather than hardcoding it
+• Need to add gziping
+• Need to clean up the connection code
+• Need to test and cleanup on more platforms (so far tested on Mac and HTML5)
+• Need to implement 'business' and 'user' events
+"""
+
 # From https://github.com/xsellier/godot-uuid
 const UUID = preload("res://analytics/uuid.gd")
-# device information
 const DEBUG = true
+
 var uuid = UUID.v4()
 
 # GameAnalytics is picky about platform, so we have to modify this a lot
@@ -365,14 +375,14 @@ func get_business_event_dict():
 		'transaction_num': 1,  # should be incremented and stored in local db
 		'receipt_info': {'receipt': 'xyz', 'store': 'apple'}  # receipt is base64 encoded receipt
 	}
-	return event_dict
+	return 'not implemented'
 
 
 func get_user_event():
 	var event_dict = {
 		'category': 'user'
 	}
-	return event_dict
+	return 'not implemented'
 
 
 func get_session_end_event(length_in_seconds):

@@ -87,7 +87,7 @@ var game_end = false
 var requests = HTTPClient.new()
 
 func prepare():
-	if debug:
+	if DEBUG:
 		print('device: ', device)
 		print('manufacturer: ', manufacturer)
 		print('platform: ', platform)
@@ -337,7 +337,7 @@ func submit_callback():
 	else:
 		post_to_log("Event submission FAILED!")
 
-	if game_end:
+	if game_end and get_tree():
 		get_tree().quit()
 	return status_code
 
@@ -489,6 +489,10 @@ func annotate_event_with_default_values():
 	#event_dict.update(default_annotations)
 	#state_config['event_queue'].append(default_annotations)
 	return default_annotations
+
+
+func post_to_log(message):
+	print(message)
 
 func print_verbose(message):
 	print(message)
